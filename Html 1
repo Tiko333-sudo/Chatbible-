@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBible</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .header { background: #007bff; color: white; padding: 15px; }
+        .chatbox { width: 80%; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .input-box, .search-btn { width: 80%; padding: 10px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <!-- Paramètre Zone -->
+    <div class="header">
+        <h2>ChatBible</h2>
+        <p>Contact: 0338471985 | Email: ephraimnavalona@gmail.com</p>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chatbox">
+        <p>Salama! Soraty eto ny andinin-teny tianao hotadiavina ⬇️</p>
+        <input type="text" id="searchQuery" class="input-box" placeholder="Soraty eto...">
+        <button onclick="searchBible()" class="search-btn">Hitady</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        async function searchBible() {
+            let query = document.getElementById("searchQuery").value.toLowerCase();
+            let response = await fetch('https://raw.githubusercontent.com/Tiko333-sudo/Chatbible-/main/baiboly.json');
+            let data = await response.json();
+
+            let resultText = "Tsy hita ilay andinin-teny!";
+            data.forEach(verse => {
+                if (verse.text.toLowerCase().includes(query)) {
+                    resultText = verse.book + " " + verse.chapter + ":" + verse.verse + " - " + verse.text;
+                }
+            });
+
+            document.getElementById("result").innerText = resultText;
+        }
+    </script>
+
+</body>
+</html>
